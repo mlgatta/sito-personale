@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="it" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Martina La Gatta — Grafica Pubblicitaria & Organizzazione Aziendale</title>
+    <meta name="description" content="Sito personale di Martina La Gatta. Esperienza nella grafica pubblicitaria, prestampa, stampa digitale e gestione organizzativa e back-office.">
+
+    <!-- Google Fonts: Plus Jakarta Sans (titoli lineari) e Inter (testi) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Inter"', 'sans-serif'],
+                        display: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        ivory: '#FAF9F6',
+                        surface: '#FFFFFF',
+                        stoneborder: '#E7E5E4',
+                        charcoal: '#1C1917',
+                        slatewarm: '#57534E',
+                        petrol: {
+                            DEFAULT: '#1B4965',
+                            hover: '#14374D',
+                            soft: '#EDF4F8',
+                            border: '#CBE0EC'
+                        },
+                        ochre: {
+                            DEFAULT: '#C87D28',
+                            soft: '#FDF6EC',
+                            border: '#F3DFC1'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #FAF9F6;
+            color: #1C1917;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, .font-display {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            letter-spacing: -0.025em;
+        }
+
+        /* Animazione fluida di ingresso allo scorrimento */
+        .reveal {
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Notifica Toast per copia email */
+        #toast {
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        #toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-petrol selection:text-white">
+
+    <!-- ==================== HEADER STICKY MINIMALE ==================== -->
+    <header class="sticky top-0 z-50 bg-ivory/90 backdrop-blur-md border-b border-stoneborder">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 sm:h-20">
+                
+                <!-- Monogramma & Nome -->
+                <a href="#top" class="flex items-center gap-3 group">
+                    <span class="w-9 h-9 rounded-xl bg-petrol text-white font-display font-bold text-sm flex items-center justify-center tracking-tight group-hover:bg-petrol-hover transition-colors">
+                        ML
+                    </span>
+                    <span class="font-display font-bold text-base sm:text-lg text-charcoal tracking-tight">
+                        Martina La Gatta
+                    </span>
+                </a>
+
+                <!-- Navigazione Desktop -->
+                <nav class="hidden md:flex items-center gap-7 text-sm font-medium text-slatewarm">
+                    <a href="#profilo" class="hover:text-petrol transition-colors">Profilo</a>
+                    <a href="#esperienza" class="hover:text-petrol transition-colors">Esperienza</a>
+                    <a href="#competenze" class="hover:text-petrol transition-colors">Competenze</a>
+                    <a href="#formazione" class="hover:text-petrol transition-colors">Formazione</a>
+                    <a href="#contatti" class="hover:text-petrol transition-colors">Contatti</a>
+                </nav>
+
+                <!-- Azioni Destra -->
+                <div class="flex items-center gap-2.5">
+                    <a href="#contatti" class="hidden sm:inline-flex items-center justify-center px-4 py-2 rounded-xl bg-petrol hover:bg-petrol-hover text-white text-xs font-semibold transition-colors">
+                        Contattami
+                    </a>
+
+                    <!-- Pulsante Menu Mobile -->
+                    <button id="mobile-toggle" aria-label="Apri menu" class="md:hidden p-2.5 rounded-xl bg-surface border border-stoneborder text-charcoal hover:bg-stone-100 transition-colors">
+                        <svg id="icon-open" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                        <svg id="icon-close" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Drawer Navigazione Mobile -->
+        <div id="mobile-drawer" class="hidden md:hidden bg-surface border-b border-stoneborder px-4 pt-2 pb-5 space-y-1 shadow-lg">
+            <a href="#profilo" class="mobile-nav-link block px-3.5 py-2.5 rounded-xl text-sm font-medium text-charcoal hover:bg-ivory">Profilo</a>
+            <a href="#esperienza" class="mobile-nav-link block px-3.5 py-2.5 rounded-xl text-sm font-medium text-charcoal hover:bg-ivory">Esperienza</a>
+            <a href="#competenze" class="mobile-nav-link block px-3.5 py-2.5 rounded-xl text-sm font-medium text-charcoal hover:bg-ivory">Competenze</a>
+            <a href="#formazione" class="mobile-nav-link block px-3.5 py-2.5 rounded-xl text-sm font-medium text-charcoal hover:bg-ivory">Formazione</a>
+            <a href="#contatti" class="mobile-nav-link block px-3.5 py-2.5 rounded-xl text-sm font-semibold text-petrol hover:bg-petrol-soft">Contatti</a>
+        </div>
+    </header>
+
+    <!-- ==================== HERO SECTION EDITORIALE ==================== -->
+    <section id="top" class="pt-14 pb-20 sm:pt-24 sm:pb-28 border-b border-stoneborder">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl">
+                
+                <!-- Eyebrow Badge -->
+                <div class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-surface border border-stoneborder mb-6">
+                    <span class="w-2 h-2 rounded-full bg-ochre"></span>
+                    <span class="text-xs font-semibold uppercase tracking-wider text-petrol">
+                        Grafica &middot; Organizzazione &middot; Web
+                    </span>
+                </div>
+
+                <!-- Titolo Principale Lineare -->
+                <h1 class="font-display text-4xl sm:text-6xl font-extrabold text-charcoal tracking-tight leading-[1.08] mb-6">
+                    Martina La Gatta
+                </h1>
+
+                <!-- Sottotitolo / Lead -->
+                <p class="text-lg sm:text-xl text-slatewarm font-normal leading-relaxed mb-8">
+                    Dalla progettazione grafica e prestampa alla gestione organizzativa: creatività, precisione e metodo al servizio dei progetti.
+                </p>
+
+                <!-- Metadata Pills -->
+                <div class="flex flex-wrap items-center gap-2.5 mb-10">
+                    <span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-surface border border-stoneborder text-xs font-medium text-charcoal">
+                        <svg class="w-3.5 h-3.5 text-petrol" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
+                        Valmadrera (LC), Italia
+                    </span>
+                    <span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-surface border border-stoneborder text-xs font-medium text-charcoal">
+                        <svg class="w-3.5 h-3.5 text-petrol" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        Patente B
+                    </span>
+                    <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-ochre-soft border border-ochre-border text-xs font-semibold text-ochre">
+                        <span class="w-1.5 h-1.5 rounded-full bg-ochre animate-pulse"></span>
+                        Disponibile per nuove opportunità
+                    </span>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5">
+                    <a href="#contatti" class="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-petrol hover:bg-petrol-hover text-white text-sm font-semibold transition-colors shadow-xs">
+                        <span>Contattami</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                        </svg>
+                    </a>
+                    <button type="button" data-copy="m••••••••••14@gmail.com" class="copy-trigger inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-surface hover:bg-stone-100 border border-stoneborder text-charcoal text-sm font-semibold transition-colors cursor-pointer">
+                        <svg class="w-4 h-4 text-petrol" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                        </svg>
+                        <span>Copia Email</span>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== PROFILO (PRESENTAZIONE) ==================== -->
+    <section id="profilo" class="py-20 sm:py-28 border-b border-stoneborder">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 reveal">
+            
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+                
+                <!-- Intestazione Sezione (4 colonne) -->
+                <div class="lg:col-span-4">
+                    <span class="text-xs font-semibold uppercase tracking-widest text-ochre block mb-2">
+                        01 &mdash; Profilo
+                    </span>
+                    <h2 class="font-display text-3xl font-bold text-charcoal leading-tight">
+                        Creatività grafica e metodo organizzativo.
+                    </h2>
+                    <div class="w-12 h-1 bg-petrol rounded-full mt-5"></div>
+                </div>
+
+                <!-- Contenuto Editoriale (8 colonne) -->
+                <div class="lg:col-span-8 space-y-6">
+                    <div class="p-7 sm:p-9 rounded-2xl bg-surface border border-stoneborder space-y-5 text-base text-slatewarm leading-relaxed">
+                        <p>
+                            Ho maturato esperienza in vari ambiti della <strong class="font-semibold text-charcoal">grafica</strong>, dalla prestampa e stampa digitale in tipografia, alla progettazione come grafica pubblicitaria in un punto vendita e-commerce.
+                        </p>
+                        <p>
+                            Ho avuto l'opportunità di mettermi in gioco lavorando anche come <strong class="font-semibold text-charcoal">portalettere per Poste Italiane SpA</strong>: un'esperienza nella quale ho consolidato le mie tecniche organizzative e di gestione del carico di lavoro, e con la quale ho potuto affinare l'abilità di relazionarmi e comunicare in maniera efficace con il cliente.
+                        </p>
+                        <p>
+                            Ora sono alla ricerca di una posizione lavorativa dove le mie competenze organizzative possano fare la differenza. Le mie esperienze creative nel settore grafico, unite alla capacità di gestire attività e progetti in modo metodico, rappresentano un plus che desidero mettere a servizio dell'organizzazione aziendale.
+                        </p>
+                    </div>
+
+                    <!-- Tre pilastri sintetici -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div class="p-5 rounded-2xl bg-surface border border-stoneborder">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-petrol block mb-1">Design &amp; Stampa</span>
+                            <p class="text-xs text-slatewarm leading-relaxed">Progettazione editoriale, pubblicitaria, web ed esecutivi di prestampa.</p>
+                        </div>
+                        <div class="p-5 rounded-2xl bg-surface border border-stoneborder">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-ochre block mb-1">Back-Office</span>
+                            <p class="text-xs text-slatewarm leading-relaxed">Gestione ordini, anagrafiche clienti, email, centralino e gestionali.</p>
+                        </div>
+                        <div class="p-5 rounded-2xl bg-surface border border-stoneborder">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-petrol block mb-1">Organizzazione</span>
+                            <p class="text-xs text-slatewarm leading-relaxed">Pianificazione autonoma delle tempistiche e gestione del carico di lavoro.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== ESPERIENZA LAVORATIVA ==================== -->
+    <section id="esperienza" class="py-20 sm:py-28 border-b border-stoneborder">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Header Sezione -->
+            <div class="max-w-2xl mb-14 reveal">
+                <span class="text-xs font-semibold uppercase tracking-widest text-ochre block mb-2">
+                    02 &mdash; Percorso Professionale
+                </span>
+                <h2 class="font-display text-3xl sm:text-4xl font-bold text-charcoal">
+                    Esperienza Lavorativa
+                </h2>
+                <p class="text-sm sm:text-base text-slatewarm mt-2">
+                    Un percorso che unisce comunicazione visiva, produzione grafica, supporto amministrativo e logistica.
+                </p>
+            </div>
+
+            <!-- Timeline Verticale Pulita -->
+            <div class="relative border-l-2 border-stoneborder ml-3 sm:ml-4 space-y-8">
+
+                <!-- 1. Poste Italiane - Lecco -->
+                <article class="reveal relative pl-7 sm:pl-10">
+                    <span class="absolute -left-[9px] top-7 w-4 h-4 rounded-full bg-ivory border-4 border-petrol"></span>
+                    <div class="p-6 sm:p-8 rounded-2xl bg-surface border border-stoneborder hover:border-petrol/40 transition-colors">
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                            <span class="inline-block px-3 py-1 rounded-lg bg-petrol-soft border border-petrol-border text-xs font-semibold text-petrol">
+                                10/2025 &ndash; 01/2026
+                            </span>
+                            <span class="text-xs font-medium text-slatewarm">
+                                Lecco, Italia
+                            </span>
+                        </div>
+                        <h3 class="font-display text-xl font-bold text-charcoal">Portalettere</h3>
+                        <p class="text-sm font-semibold text-ochre mb-3">Poste Italiane SpA</p>
+                        <p class="text-sm text-slatewarm leading-relaxed">
+                            Impiegata per lo svolgimento di attività di recapito presso la funzione <strong class="font-medium text-charcoal">Posta, Comunicazione e Logistica &ndash; CL Lecco</strong>.
+                        </p>
+                    </div>
+                </article>
+
+                <!-- 2. Poste Italiane - Valmadrera -->
+                <article class="reveal relative pl-7 sm:pl-10">
+                    <span class="absolute -left-[9px] top-7 w-4 h-4 rounded-full bg-ivory border-4 border-petrol"></span>
+                    <div class="p-6 sm:p-8 rounded-2xl bg-surface border border-stoneborder hover:border-petrol/40 transition-colors">
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                            <span class="inline-block px-3 py-1 rounded-lg bg-petrol-soft border border-petrol-border text-xs font-semibold text-petrol">
+                                10/2024 &ndash; 05/2025
+                            </span>
+                            <span class="text-xs font-medium text-slatewarm">
+                                Valmadrera (LC), Italia
+                            </span>
+                        </div>
+                        <h3 class="font-display text-xl font-bold text-charcoal">Portalettere</h3>
+                        <p class="text-sm font-semibold text-ochre mb-3">Poste Italiane SpA</p>
+                        <p class="text-sm text-slatewarm leading-relaxed">
+                            Impiegata per lo svolgimento di attività di recapito presso la funzione <strong class="font-medium text-charcoal">Posta, Comunicazione e Logistica &ndash; CD Valmadrera</strong>.
+                        </p>
+                    </div>
+                </article>
+
+                <!-- 3. Samà Srl -->
+                <article class="reveal relative pl-7 sm:pl-10">
+                    <span class="absolute -left-[9px] top-7 w-4 h-4 rounded-full bg-ivory border-4 border-ochre"></span>
+                    <div class="p-6 sm:p-8 rounded-2xl bg-surface border border-stoneborder hover:border-ochre/50 transition-colors">
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                            <span class="inline-block px-3 py-1 rounded-lg bg-ochre-soft border border-ochre-border text-xs font-semibold text-ochre">
+                                06/2021 &ndash; 06/2024
+                            </span>
+                            <span class="text-xs font-medium text-slatewarm">
+                                Lecco, Italia
+                            </span>
+                        </div>
+                        <h3 class="font-display text-xl font-bold text-charcoal">Impiegata Grafica Pubblicitaria</h3>
+                        <p class="text-sm font-semibold text-petrol mb-4">Samà Srl</p>
+                        <ul class="space-y-2.5 text-sm text-slatewarm leading-relaxed">
+                            <li class="flex items-start gap-2.5">
+                                <span class="w-1.5 h-1.5 rounded-full bg-ochre mt-2 shrink-0"></span>
+                                <span>Editing foto e progettazione grafica di flyer, brochure aziendali, schede prodotto, cataloghi e listini.</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <span class="w-1.5 h-1.5 rounded-full bg-ochre mt-2 shrink-0"></span>
+                                <span>Creazione di banner per sito web e materiale pubblicitario su altri canali web.</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <span class="w-1.5 h-1.5 rounded-full bg-petrol mt-2 shrink-0"></span>
+                                <span><strong class="font-semibold text-charcoal">Attività di back-office:</strong> gestione e smistamento di telefonate ed e-mail, supporto al servizio clienti, uso del gestionale, inserimento anagrafica clienti e ordini telefonici.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- 4. Grafiche Villa Srl -->
+                <article class="reveal relative pl-7 sm:pl-10">
+                    <span class="absolute -left-[9px] top-7 w-4 h-4 rounded-full bg-ivory border-4 border-ochre"></span>
+                    <div class="p-6 sm:p-8 rounded-2xl bg-surface border border-stoneborder hover:border-ochre/50 transition-colors">
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                            <span class="inline-block px-3 py-1 rounded-lg bg-ochre-soft border border-ochre-border text-xs font-semibold text-ochre">
+                                10/2018 &ndash; 06/2021
+                            </span>
+                            <span class="text-xs font-medium text-slatewarm">
+                                Molteno (LC), Italia
+                            </span>
+                        </div>
+                        <h3 class="font-display text-xl font-bold text-charcoal">Addetta Prestampa e Stampa Digitale</h3>
+                        <p class="text-sm font-semibold text-petrol mb-4">Grafiche Villa Srl</p>
+                        <ul class="space-y-2.5 text-sm text-slatewarm leading-relaxed">
+                            <li class="flex items-start gap-2.5">
+                                <span class="w-1.5 h-1.5 rounded-full bg-ochre mt-2 shrink-0"></span>
+                                <span>Progettazione grafica, prestampa e stampa digitale di piccolo e grande formato.</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <span class="w-1.5 h-1.5 rounded-full bg-ochre mt-2 shrink-0"></span>
+                                <span>Stampa UV su altri tipi di supporto.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== COMPETENZE (GRIGLIA INTERATTIVA FILTRABILE) ==================== -->
+    <section id="competenze" class="py-20 sm:py-28 border-b border-stoneborder">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Header & Filtri -->
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 reveal">
+                <div>
+                    <span class="text-xs font-semibold uppercase tracking-widest text-ochre block mb-2">
+                        03 &mdash; Skill Set
+                    </span>
+                    <h2 class="font-display text-3xl sm:text-4xl font-bold text-charcoal">
+                        Competenze
+                    </h2>
+                </div>
+
+                <!-- Filter Tabs -->
+                <div class="flex flex-wrap gap-2">
+                    <button type="button" data-filter="all" class="skill-filter px-4 py-2 rounded-xl text-xs font-semibold bg-petrol text-white transition-colors cursor-pointer">
+                        Tutte
+                    </button>
+                    <button type="button" data-filter="grafica" class="skill-filter px-4 py-2 rounded-xl text-xs font-semibold bg-surface border border-stoneborder text-slatewarm hover:text-charcoal transition-colors cursor-pointer">
+                        Grafica &amp; Digital
+                    </button>
+                    <button type="button" data-filter="office" class="skill-filter px-4 py-2 rounded-xl text-xs font-semibold bg-surface border border-stoneborder text-slatewarm hover:text-charcoal transition-colors cursor-pointer">
+                        Office &amp; Organizzazione
+                    </button>
+                    <button type="button" data-filter="trasversali" class="skill-filter px-4 py-2 rounded-xl text-xs font-semibold bg-surface border border-stoneborder text-slatewarm hover:text-charcoal transition-colors cursor-pointer">
+                        Trasversali
+                    </button>
+                </div>
+            </div>
+
+            <!-- Griglia Competenze -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 reveal">
+
+                <!-- Card 1: Grafica & Digital -->
+                <div data-category="grafica" class="skill-card p-7 sm:p-8 rounded-2xl bg-surface border border-stoneborder">
+                    <div class="flex items-center justify-between mb-5">
+                        <span class="text-xs font-semibold uppercase tracking-wider text-ochre">Competenze Digitali &amp; Creative</span>
+                        <span class="w-2.5 h-2.5 rounded-full bg-ochre"></span>
+                    </div>
+                    <h3 class="font-display text-xl font-bold text-charcoal mb-5">Grafica, Prestampa &amp; Web</h3>
+
+                    <!-- Suite Adobe evidenziata -->
+                    <div class="grid grid-cols-3 gap-3 mb-5">
+                        <div class="p-3.5 rounded-xl bg-ivory border border-stoneborder">
+                            <span class="font-display font-extrabold text-base text-petrol block">Ai</span>
+                            <span class="text-xs font-medium text-charcoal mt-0.5 block">Illustrator</span>
+                        </div>
+                        <div class="p-3.5 rounded-xl bg-ivory border border-stoneborder">
+                            <span class="font-display font-extrabold text-base text-petrol block">Ps</span>
+                            <span class="text-xs font-medium text-charcoal mt-0.5 block">Photoshop</span>
+                        </div>
+                        <div class="p-3.5 rounded-xl bg-ivory border border-stoneborder">
+                            <span class="font-display font-extrabold text-base text-petrol block">Id</span>
+                            <span class="text-xs font-medium text-charcoal mt-0.5 block">InDesign</span>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1.5 rounded-lg bg-ivory border border-stoneborder text-xs font-medium text-charcoal">Adobe Illustrator</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-ivory border border-stoneborder text-xs font-medium text-charcoal">Adobe Photoshop</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-ivory border border-stoneborder text-xs font-medium text-charcoal">Adobe InDesign</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-ivory border border-stoneborder text-xs font-medium text-charcoal">Prestampa</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-ivory border border-stoneborder text-xs font-medium text-charcoal">Stampa Digitale &amp; UV</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-ivory border border-stoneborder text-xs font-medium text-charcoal">Banner Web &amp; E-commerce</span>
+                    </div>
+                </div>
+
+                <!-- Card 2: Office & Organizzazione -->
+                <div data-category="office" class="skill-card p-7 sm:p-8 rounded-2xl bg-surface border border-stoneborder">
+                    <div class="flex items-center justify-between mb-5">
+                        <span class="text-xs font-semibold uppercase tracking-wider text-petrol">Sistemi &amp; Amministrazione</span>
+                        <span class="w-2.5 h-2.5 rounded-full bg-petrol"></span>
+                    </div>
+                    <h3 class="font-display text-xl font-bold text-charcoal mb-5">Office &amp; Gestione Digitale</h3>
+
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1.5 rounded-lg bg-ivory border border-stoneborder text-xs font-medium text-charcoal">Microsoft Office</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-ivory border border-stoneborder text-xs font-medium text-charcoal">Gestione PDF</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-ivory border border-stoneborder text-xs font-medium text-charcoal">Windows</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-ivory border border-stoneborder text-xs font-medium text-charcoal">MacOS</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-ivory border border-stoneborder text-xs font-medium text-charcoal">Gestione autonoma Posta Elettronica</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-ivory border border-stoneborder text-xs font-medium text-charcoal">Utilizzo del Browser</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-ivory border border-stoneborder text-xs font-medium text-charcoal">Uso Gestionali Aziendali</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-ivory border border-stoneborder text-xs font-medium text-charcoal">Anagrafica Clienti &amp; Ordini</span>
+                    </div>
+                </div>
+
+                <!-- Card 3: Competenze Trasversali (a tutta larghezza su desktop) -->
+                <div data-category="trasversali" class="skill-card md:col-span-2 p-7 sm:p-8 rounded-2xl bg-surface border border-stoneborder">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-xs font-semibold uppercase tracking-wider text-petrol">Soft Skills</span>
+                        <span class="text-xs text-slatewarm">Attitudini &amp; Metodo</span>
+                    </div>
+                    <h3 class="font-display text-xl font-bold text-charcoal mb-5">Competenze Trasversali</h3>
+
+                    <div class="flex flex-wrap gap-2.5">
+                        <span class="px-3.5 py-2 rounded-xl bg-petrol-soft border border-petrol-border text-xs font-semibold text-petrol">Organizzazione</span>
+                        <span class="px-3.5 py-2 rounded-xl bg-petrol-soft border border-petrol-border text-xs font-semibold text-petrol">Precisione</span>
+                        <span class="px-3.5 py-2 rounded-xl bg-ochre-soft border border-ochre-border text-xs font-semibold text-ochre">Creatività</span>
+                        <span class="px-3.5 py-2 rounded-xl bg-ivory border border-stoneborder text-xs font-medium text-charcoal">Pianificazione</span>
+                        <span class="px-3.5 py-2 rounded-xl bg-ivory border border-stoneborder text-xs font-medium text-charcoal">Metodicità</span>
+                        <span class="px-3.5 py-2 rounded-xl bg-ivory border border-stoneborder text-xs font-medium text-charcoal">Gestione del tempo</span>
+                        <span class="px-3.5 py-2 rounded-xl bg-ivory border border-stoneborder text-xs font-medium text-charcoal">Flessibilità</span>
+                        <span class="px-3.5 py-2 rounded-xl bg-ivory border border-stoneborder text-xs font-medium text-charcoal">Team working</span>
+                        <span class="px-3.5 py-2 rounded-xl bg-ivory border border-stoneborder text-xs font-medium text-charcoal">Problem solving</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== FORMAZIONE, LINGUE & INTERESSI ==================== -->
+    <section id="formazione" class="py-20 sm:py-28 border-b border-stoneborder">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="mb-12 reveal">
+                <span class="text-xs font-semibold uppercase tracking-widest text-ochre block mb-2">
+                    04 &mdash; Background
+                </span>
+                <h2 class="font-display text-3xl sm:text-4xl font-bold text-charcoal">
+                    Formazione, Lingue &amp; Interessi
+                </h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 reveal">
+
+                <!-- Colonna 1: Istruzione -->
+                <div class="p-7 rounded-2xl bg-surface border border-stoneborder flex flex-col justify-between">
+                    <div>
+                        <span class="text-xs font-semibold uppercase tracking-wider text-petrol block mb-3">Istruzione e Formazione</span>
+                        <span class="inline-block px-2.5 py-1 rounded-md bg-ivory border border-stoneborder text-xs font-medium text-slatewarm mb-3">
+                            03/07/2018
+                        </span>
+                        <h3 class="font-display text-lg font-bold text-charcoal leading-snug mb-2">
+                            Diploma in Grafica e Comunicazione
+                        </h3>
+                        <p class="text-sm font-medium text-ochre">I.I.S. P.A. Fiocchi</p>
+                        <p class="text-xs text-slatewarm mt-1">Lecco, Italia</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-stoneborder">
+                        <span class="text-xs text-slatewarm">Indirizzo Grafica e Comunicazione Visiva</span>
+                    </div>
+                </div>
+
+                <!-- Colonna 2: Competenze Linguistiche -->
+                <div class="p-7 rounded-2xl bg-surface border border-stoneborder flex flex-col justify-between">
+                    <div>
+                        <span class="text-xs font-semibold uppercase tracking-wider text-petrol block mb-4">Competenze Linguistiche</span>
+                        
+                        <div class="space-y-4">
+                            <div class="p-3.5 rounded-xl bg-ivory border border-stoneborder">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm font-semibold text-charcoal">Italiano</span>
+                                    <span class="text-xs font-semibold text-petrol">Madrelingua</span>
+                                </div>
+                            </div>
+
+                            <div class="p-3.5 rounded-xl bg-ivory border border-stoneborder">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-sm font-semibold text-charcoal">Inglese</span>
+                                    <span class="text-[11px] font-medium text-slatewarm">Quadro CEFR</span>
+                                </div>
+                                <div class="grid grid-cols-2 gap-1.5 text-xs text-slatewarm">
+                                    <span>Lettura: <strong class="text-charcoal">B1</strong></span>
+                                    <span>Scrittura: <strong class="text-charcoal">B1</strong></span>
+                                    <span>Ascolto: <strong class="text-charcoal">A2</strong></span>
+                                    <span>Orale: <strong class="text-charcoal">A2</strong></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Colonna 3: Patente & Hobby -->
+                <div class="p-7 rounded-2xl bg-surface border border-stoneborder flex flex-col justify-between">
+                    <div>
+                        <span class="text-xs font-semibold uppercase tracking-wider text-petrol block mb-4">Patente &amp; Interessi</span>
+                        
+                        <div class="p-3.5 rounded-xl bg-ochre-soft border border-ochre-border mb-5">
+                            <span class="text-xs font-semibold text-ochre block">Patente di guida</span>
+                            <span class="font-display text-base font-bold text-charcoal">Categoria B (Automunita)</span>
+                        </div>
+
+                        <span class="text-xs font-semibold text-slatewarm block mb-2.5">Hobby e sport</span>
+                        <div class="flex flex-wrap gap-1.5">
+                            <span class="px-2.5 py-1 rounded-lg bg-ivory border border-stoneborder text-xs font-medium text-charcoal">Calcio</span>
+                            <span class="px-2.5 py-1 rounded-lg bg-ivory border border-stoneborder text-xs font-medium text-charcoal">Corsa</span>
+                            <span class="px-2.5 py-1 rounded-lg bg-ivory border border-stoneborder text-xs font-medium text-charcoal">Trekking</span>
+                            <span class="px-2.5 py-1 rounded-lg bg-ivory border border-stoneborder text-xs font-medium text-charcoal">Arrampicata</span>
+                            <span class="px-2.5 py-1 rounded-lg bg-ivory border border-stoneborder text-xs font-medium text-charcoal">Pallavolo</span>
+                            <span class="px-2.5 py-1 rounded-lg bg-ivory border border-stoneborder text-xs font-medium text-charcoal">Viaggi</span>
+                            <span class="px-2.5 py-1 rounded-lg bg-ivory border border-stoneborder text-xs font-medium text-charcoal">Musica</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== CONTATTI ==================== -->
+    <section id="contatti" class="py-20 sm:py-28">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 reveal">
+            
+            <div class="rounded-3xl bg-petrol text-white p-8 sm:p-12 lg:p-14 shadow-sm">
+                <div class="max-w-2xl mb-10">
+                    <span class="text-xs font-semibold uppercase tracking-widest text-ochre-border block mb-3">
+                        05 &mdash; Contatti
+                    </span>
+                    <h2 class="font-display text-3xl sm:text-4xl font-bold leading-tight mb-3">
+                        Restiamo in contatto.
+                    </h2>
+                    <p class="text-white/80 text-sm sm:text-base leading-relaxed">
+                        Sono disponibile per un colloquio conoscitivo e per valutare nuove opportunità lavorative in ambito grafico, back-office e organizzativo.
+                    </p>
+                </div>
+
+                <!-- 3 Card Contatto -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
+                    
+                    <!-- Email -->
+                    <div class="p-6 rounded-2xl bg-white/10 border border-white/15 flex flex-col justify-between">
+                        <div>
+                            <span class="text-[11px] font-semibold uppercase tracking-wider text-white/70">Indirizzo E-mail</span>
+                            <span class="block text-sm sm:text-base font-semibold text-white break-all mt-1.5">
+                                m••••••••••14@gmail.com
+                            </span>
+                        </div>
+                        <button type="button" data-copy="m••••••••••14@gmail.com" class="copy-trigger mt-6 w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-white text-petrol hover:bg-ivory text-xs font-semibold transition-colors cursor-pointer">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            <span>Copia E-mail</span>
+                        </button>
+                    </div>
+
+                    <!-- Telefono -->
+                    <div class="p-6 rounded-2xl bg-white/10 border border-white/15 flex flex-col justify-between">
+                        <div>
+                            <span class="text-[11px] font-semibold uppercase tracking-wider text-white/70">Telefono</span>
+                            <span class="block text-base sm:text-lg font-semibold text-white mt-1.5">
+                                (+39) ••• ••• ••30
+                            </span>
+                        </div>
+                        <a href="#contatti" class="mt-6 w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-white/15 hover:bg-white/25 text-white text-xs font-semibold transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                            </svg>
+                            <span>Numero mascherato</span>
+                        </a>
+                    </div>
+
+                    <!-- Residenza -->
+                    <div class="p-6 rounded-2xl bg-white/10 border border-white/15 flex flex-col justify-between">
+                        <div>
+                            <span class="text-[11px] font-semibold uppercase tracking-wider text-white/70">Abitazione</span>
+                            <p class="font-display text-base font-bold text-white mt-1.5">
+                                Via ••••••••
+                            </p>
+                            <p class="text-xs text-white/80 mt-0.5">23868 Valmadrera (LC)</p>
+                        </div>
+                        <div class="mt-6 pt-3 border-t border-white/15 text-xs text-white/80">
+                            Disponibile in provincia di Lecco e zone limitrofe
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ==================== FOOTER & AUTORIZZAZIONE GDPR ==================== -->
+    <footer class="bg-surface border-t border-stoneborder py-10">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+            
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div class="flex items-center gap-2.5">
+                    <span class="w-7 h-7 rounded-lg bg-petrol text-white font-display font-bold text-xs flex items-center justify-center">ML</span>
+                    <span class="font-display font-bold text-sm text-charcoal">Martina La Gatta</span>
+                </div>
+                <div class="flex flex-wrap gap-6 text-xs font-medium text-slatewarm">
+                    <a href="#profilo" class="hover:text-petrol transition-colors">Profilo</a>
+                    <a href="#esperienza" class="hover:text-petrol transition-colors">Esperienza</a>
+                    <a href="#competenze" class="hover:text-petrol transition-colors">Competenze</a>
+                    <a href="#formazione" class="hover:text-petrol transition-colors">Formazione</a>
+                    <a href="#contatti" class="hover:text-petrol transition-colors">Contatti</a>
+                </div>
+            </div>
+
+            <div class="pt-6 border-t border-stoneborder flex flex-col md:flex-row justify-between gap-4 text-[11px] text-slatewarm leading-relaxed">
+                <p class="max-w-3xl">
+                    Autorizzo il trattamento dei miei dati personali presenti nel CV ai sensi dell'art. 13 d. lgs. 30 giugno 2003 n. 196 - "Codice in materia di protezione dei dati personali" e dell'art. 13 GDPR 679/16 - "Regolamento europeo sulla protezione dei dati personali". Valmadrera (LC).
+                </p>
+                <p class="shrink-0 font-medium text-charcoal">
+                    &copy; <span id="year">2026</span> Martina La Gatta
+                </p>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- ==================== TOAST NOTIFICATION ==================== -->
+    <div id="toast" role="status" aria-live="polite" class="fixed bottom-6 right-6 z-50 flex items-center gap-3 px-4 py-3 rounded-xl bg-charcoal text-white text-xs font-medium shadow-xl border border-stone-700 pointer-events-none">
+        <span class="w-2 h-2 rounded-full bg-ochre"></span>
+        <span>Email mascherata copiata negli appunti: m••••••••••14@gmail.com</span>
+    </div>
+
+    <!-- ==================== JAVASCRIPT ==================== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Anno corrente
+            const yearEl = document.getElementById('year');
+            if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+            // Menu Mobile Toggle
+            const mobileToggle = document.getElementById('mobile-toggle');
+            const mobileDrawer = document.getElementById('mobile-drawer');
+            const iconOpen = document.getElementById('icon-open');
+            const iconClose = document.getElementById('icon-close');
+
+            function toggleMenu() {
+                const isHidden = mobileDrawer.classList.contains('hidden');
+                mobileDrawer.classList.toggle('hidden', !isHidden);
+                iconOpen.classList.toggle('hidden', isHidden);
+                iconClose.classList.toggle('hidden', !isHidden);
+            }
+
+            if (mobileToggle) {
+                mobileToggle.addEventListener('click', toggleMenu);
+            }
+
+            document.querySelectorAll('.mobile-nav-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (!mobileDrawer.classList.contains('hidden')) {
+                        toggleMenu();
+                    }
+                });
+            });
+
+            // Filtri Interattivi per Competenze
+            const filterBtns = document.querySelectorAll('.skill-filter');
+            const skillCards = document.querySelectorAll('.skill-card');
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterBtns.forEach(b => {
+                        b.classList.remove('bg-petrol', 'text-white');
+                        b.classList.add('bg-surface', 'text-slatewarm', 'border', 'border-stoneborder');
+                    });
+                    btn.classList.add('bg-petrol', 'text-white');
+                    btn.classList.remove('bg-surface', 'text-slatewarm', 'border', 'border-stoneborder');
+
+                    const filter = btn.getAttribute('data-filter');
+                    skillCards.forEach(card => {
+                        const category = card.getAttribute('data-category');
+                        if (filter === 'all' || category === filter) {
+                            card.classList.remove('hidden');
+                        } else {
+                            card.classList.add('hidden');
+                        }
+                    });
+                });
+            });
+
+            // Copia Email con Toast
+            const toast = document.getElementById('toast');
+            let toastTimeout;
+
+            function showToast() {
+                toast.classList.add('show');
+                clearTimeout(toastTimeout);
+                toastTimeout = setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 2800);
+            }
+
+            document.querySelectorAll('.copy-trigger').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const email = btn.getAttribute('data-copy');
+                    const tempInput = document.createElement('input');
+                    tempInput.value = email;
+                    document.body.appendChild(tempInput);
+                    tempInput.select();
+                    tempInput.setSelectionRange(0, 99999);
+                    try {
+                        document.execCommand('copy');
+                        showToast();
+                    } catch (err) {
+                        console.error('Errore durante la copia:', err);
+                    }
+                    document.body.removeChild(tempInput);
+                });
+            });
+
+            // Animazioni allo scorrimento (IntersectionObserver)
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        obs.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.08 });
+
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        });
+    </script>
+</body>
+</html>
